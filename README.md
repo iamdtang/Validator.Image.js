@@ -4,6 +4,11 @@ A JavaScript constructor function or 'class' for validating the dimensions of an
 
 This can be used with the [Validator](https://github.com/skaterdav85/Validator) constructor function, which was inspired by Laravel's Validator class, or it can be used by itself.
 
+### To Start
+
+Load the script file in the _dist_ folder. There are minified and unminified versions.
+
+
 ### Example
 
 ```js
@@ -26,6 +31,7 @@ This can be used with the [Validator](https://github.com/skaterdav85/Validator) 
 	
 
 ```
+
 ### Required
 * file
 

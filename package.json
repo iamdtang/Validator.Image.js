@@ -1,0 +1,14 @@
+{
+	"name" : "validator.image",
+	"title" : "Validator.Image()",
+	"version" : "0.1.0",
+	"homepage" : "https://github.com/skaterdav85/Validator.Image",
+	"author": {
+    	"name": "David",
+    	"email": "dtang85@gmail.com"
+  	},
+  	"repository": {
+    	"type": "git",
+    	"url": "git://github.com/skaterdav85/Validator.Image.git"
+  	}
+}
