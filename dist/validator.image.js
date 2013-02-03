@@ -44,6 +44,10 @@
 			this.errorMessages[key] = 'The ' + key + ' should be between ' + this[key][0] + 'px and ' + this[key][1] + 'px.';
 		},
 
+		_createErrorMessage: function(key) {
+			this.errorMessages[key] = 'The width does not equal ' + this[key] + 'px.';
+		},
+
 		// w and h are the actual image size
 		_validateDimensions: function(w, h) {
 			if (this.width instanceof Array) {
@@ -54,7 +58,7 @@
 			} else {
 				if (w !== this.width) {
 					this.errorCount++;
-					this.errorMessages['width'] = 'The width does not equal ' + this.width;
+					this._createErrorMessage('width');
 				}
 			}
 
@@ -66,7 +70,7 @@
 			} else {
 				if (h !== this.height) {
 					this.errorCount++;
-					this.errorMessages['height'] = 'The height does not equal ' + this.height;
+					this._createErrorMessage('height');
 				}
 			}
 			
