@@ -9,10 +9,9 @@ This can be used with the [Validator](https://github.com/skaterdav85/Validator) 
 Load the script file in the _dist_ folder. There are minified and unminified versions.
 
 
-### Example
+### Example: Validating an image from a file input
 
 ```js
-
 	var file = document.getElementById('image').files[0];
 		
 	var validation = new Validator.Image({
@@ -28,14 +27,35 @@ Load the script file in the _dist_ folder. There are minified and unminified ver
 			console.log(this.getErrorMessages());
 		}
 	});
-	
-
 ```
 
-### Required
-* file
 
-### Optional
+###Example: Validating an image from an image URL
+
+
+```js
+
+	var url = 'http://userserve-ak.last.fm/serve/500/67093654/Gold+Cobra+Deluxe+cover+HQ+PNG.png';
+
+	var validation = new Validator.Image({
+		url: url,
+		width: 500,
+		height: 500,  // or use an array for a range
+		success: function(img) {
+			document.getElementsByTagName('body')[0].appendChild(img);
+			console.log('Passes: ', img.width, img.height);
+		},
+		error: function(img) {
+			console.error('Wrong dimensions: ', img.width, img.height);
+			console.log(this.getErrorMessages());
+		}
+	});
+```
+
+### Required keys
+* file OR url
+
+### Optional keys
 * width
 * height
 

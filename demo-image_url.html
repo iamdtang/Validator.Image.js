@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<title>Image Validator</title>
+</head>
+<body>
+		
+	<input type="text" name="image" id="image" value="http://userserve-ak.last.fm/serve/500/67093654/Gold+Cobra+Deluxe+cover+HQ+PNG.png" />  
+	<button type="submit" id="btn">Check</button>
+
+	<div id="img"></div>
+	<p>This page validates the size of an image from the URL of an image.</p>
+
+<script src="src/validator.image.js"></script>
+<script>	
+	document.getElementById('btn').onclick = function() {
+		var url = document.getElementById('image').value;
+		
+		var validation = new Validator.Image({
+			url: url,
+			width: 400,
+			height: [300, 400],  // or just use a single number
+			success: function(img) {
+				document.getElementsByTagName('body')[0].appendChild(img);
+				console.log('Passes: ', img.width, img.height);
+			},
+			error: function(img) {
+				console.error('Wrong dimensions: ', img.width, img.height);
+				console.log(this.getErrorMessages());
+			}
+		});
+	};
+</script>
+
+</body>
+</html>

@@ -6,14 +6,22 @@
 
 	Validator.Image = function (options) {
 		if (supported) {
-			this.file = options.file && options.file instanceof File ? options.file : null;
+
+			if (options.file && options.file instanceof File) {
+				this.file = options.file;
+			} else if (options.url) {
+				this.url = options.url;
+			} else {
+				throw new Error('You must provide a file handle or image URL.');
+			}
+
 			this.width = options.width ? options.width : [0, Number.POSITIVE_INFINITY];
 			this.height = options.height ? options.height : [0, Number.POSITIVE_INFINITY];
 			this.success = options.success ? options.success : function() {};
 			this.error = options.error ? options.error : function() {};
 			this.errorMessages = [];
-
 			this.errorCount = 0;
+
 			this._initialize();
 		}
 	};
@@ -22,8 +30,27 @@
 		constructor: Validator.Image,
 
 		_initialize: function() {
-			var reader = this._fileReaderFactory();
-			reader.readAsDataURL(this.file);
+			var reader;
+
+			if (this.file) {
+				reader = this._fileReaderFactory();
+				reader.readAsDataURL(this.file);
+			} else if (this.url) {
+				this._checkImageURL();
+			}
+			
+		},
+
+		_checkImageURL: function() {
+			var img = document.createElement('img');
+			var that = this;
+
+			img.src = this.url;
+
+			img.onload = function() {
+				that.img = this;
+				that._validateDimensions(this.width, this.height);
+			};
 		},
 
 		// returns Image node
@@ -37,11 +64,11 @@
 		},
 
 		_createRangeErrorMessage: function(key) {
-			this.errorMessages[key] = 'The ' + key + ' should be between ' + this[key][0] + 'px and ' + this[key][1] + 'px.';
+			this.errorMessages[key] = 'The ' + key + ' should be between ' + this[key][0] + ' and ' + this[key][1] + ' pixels.';
 		},
 
 		_createErrorMessage: function(key) {
-			this.errorMessages[key] = 'The width does not equal ' + this[key] + 'px.';
+			this.errorMessages[key] = 'The ' + key + ' does not equal ' + this[key] + ' pixels.';
 		},
 
 		// w and h are the actual image size
